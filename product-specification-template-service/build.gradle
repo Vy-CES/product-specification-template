@@ -1,0 +1,11 @@
+dependencies {
+	compile project(":modules:product-specification-template:product-specification-template-api")
+
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+}
+
+buildService {
+	apiDir = "../product-specification-template-api/src/main/java"
+}
+
+group = "com.liferay.commerce.demo.product.specification.template"

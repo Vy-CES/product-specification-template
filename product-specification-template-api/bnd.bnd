@@ -1,0 +1,10 @@
+Bundle-Name: product-specification-template-api
+Bundle-SymbolicName: com.liferay.commerce.demo.product.specification.template.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.commerce.demo.product.specification.template.exception,\
+	com.liferay.commerce.demo.product.specification.template.model,\
+	com.liferay.commerce.demo.product.specification.template.service,\
+	com.liferay.commerce.demo.product.specification.template.service.persistence
+-check: EXPORTS
+-includeresource: META-INF/service.xml=../product-specification-template-service/service.xml
