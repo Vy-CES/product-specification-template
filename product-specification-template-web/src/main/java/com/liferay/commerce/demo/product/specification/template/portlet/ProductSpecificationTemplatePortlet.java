@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import org.osgi.service.component.annotations.Component;
@@ -27,6 +28,8 @@ import org.osgi.service.component.annotations.Reference;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Jeffrey Handa
@@ -80,11 +83,11 @@ public class ProductSpecificationTemplatePortlet extends MVCPortlet {
 			CPSpecificationOption cpSpecificationOption = _cpSpecificationOptionLocalService.getCPSpecificationOption(cpSpecificationOptionId);
 			long cpOptionCategoryId = cpSpecificationOption.getCPOptionCategory().getCPOptionCategoryId();
 			double priority = ParamUtil.getDouble(request, "priority_" + i);
-			String defaultValue = ParamUtil.getString(request, "defaultValue_" + i);
+			Map<Locale, String> defaultValueMap = LocalizationUtil.getLocalizationMap(request, "defaultValue_" + i);
 
 			_productSpecificationMappingLocalService.addProductSpecificationMapping(serviceContext.getUserId(),
 					serviceContext.getCompanyId(), productType, cpSpecificationOptionId, cpOptionCategoryId,
-					priority, defaultValue, serviceContext);
+					priority, defaultValueMap, serviceContext);
 		}
 	}
 

@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
 import org.osgi.service.component.annotations.Component;
@@ -52,7 +54,8 @@ public class ProductSpecificationMappingLocalServiceImpl
 	public ProductSpecificationMapping addProductSpecificationMapping(long userId, long companyId,
 																	  String productType, long cpSpecificationOptionId,
 																	  long cpOptionCategoryId, double priority,
-																	  String defaultValue, ServiceContext serviceContext) throws PortalException {
+																	  Map<Locale, String> defaultValueMap,
+																	  ServiceContext serviceContext) throws PortalException {
 
 		User user = userLocalService.getUserById(userId);
 		Date now = new Date();
@@ -70,7 +73,7 @@ public class ProductSpecificationMappingLocalServiceImpl
 		productSpecificationMapping.setCpSpecificationOptionId(cpSpecificationOptionId);
 		productSpecificationMapping.setCpOptionCategoryId(cpOptionCategoryId);
 		productSpecificationMapping.setPriority(priority);
-		productSpecificationMapping.setDefaultValue(defaultValue);
+		productSpecificationMapping.setDefaultValueMap(defaultValueMap);
 		productSpecificationMappingPersistence.updateImpl(productSpecificationMapping);
 
 		return productSpecificationMapping;
