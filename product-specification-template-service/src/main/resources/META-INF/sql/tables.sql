@@ -10,5 +10,5 @@ create table PT_ProductSpecificationMapping (
 	cpSpecificationOptionId LONG,
 	cpOptionCategoryId LONG,
 	priority DOUBLE,
-	defaultValue VARCHAR(75) null
+	defaultValue STRING null
 );

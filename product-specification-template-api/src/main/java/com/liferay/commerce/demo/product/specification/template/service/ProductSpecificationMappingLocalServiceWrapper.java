@@ -40,14 +40,15 @@ public class ProductSpecificationMappingLocalServiceWrapper
 		ProductSpecificationMapping addProductSpecificationMapping(
 				long userId, long companyId, String productType,
 				long cpSpecificationOptionId, long cpOptionCategoryId,
-				double priority, String defaultValue,
+				double priority,
+				java.util.Map<java.util.Locale, String> defaultValueMap,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _productSpecificationMappingLocalService.
 			addProductSpecificationMapping(
 				userId, companyId, productType, cpSpecificationOptionId,
-				cpOptionCategoryId, priority, defaultValue, serviceContext);
+				cpOptionCategoryId, priority, defaultValueMap, serviceContext);
 	}
 
 	/**

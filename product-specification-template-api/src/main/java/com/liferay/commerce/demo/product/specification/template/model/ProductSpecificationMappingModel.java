@@ -15,11 +15,15 @@
 package com.liferay.commerce.demo.product.specification.template.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 
 import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -36,8 +40,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface ProductSpecificationMappingModel
-	extends BaseModel<ProductSpecificationMapping>, ShardedModel,
-			StagedAuditedModel {
+	extends BaseModel<ProductSpecificationMapping>, LocalizedModel,
+			ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -250,8 +254,58 @@ public interface ProductSpecificationMappingModel
 	 *
 	 * @return the default value of this product specification mapping
 	 */
-	@AutoEscape
 	public String getDefaultValue();
+
+	/**
+	 * Returns the localized default value of this product specification mapping in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized default value of this product specification mapping
+	 */
+	@AutoEscape
+	public String getDefaultValue(Locale locale);
+
+	/**
+	 * Returns the localized default value of this product specification mapping in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized default value of this product specification mapping. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@AutoEscape
+	public String getDefaultValue(Locale locale, boolean useDefault);
+
+	/**
+	 * Returns the localized default value of this product specification mapping in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized default value of this product specification mapping
+	 */
+	@AutoEscape
+	public String getDefaultValue(String languageId);
+
+	/**
+	 * Returns the localized default value of this product specification mapping in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized default value of this product specification mapping
+	 */
+	@AutoEscape
+	public String getDefaultValue(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getDefaultValueCurrentLanguageId();
+
+	@AutoEscape
+	public String getDefaultValueCurrentValue();
+
+	/**
+	 * Returns a map of the locales and localized default values of this product specification mapping.
+	 *
+	 * @return the locales and localized default values of this product specification mapping
+	 */
+	public Map<Locale, String> getDefaultValueMap();
 
 	/**
 	 * Sets the default value of this product specification mapping.
@@ -259,5 +313,54 @@ public interface ProductSpecificationMappingModel
 	 * @param defaultValue the default value of this product specification mapping
 	 */
 	public void setDefaultValue(String defaultValue);
+
+	/**
+	 * Sets the localized default value of this product specification mapping in the language.
+	 *
+	 * @param defaultValue the localized default value of this product specification mapping
+	 * @param locale the locale of the language
+	 */
+	public void setDefaultValue(String defaultValue, Locale locale);
+
+	/**
+	 * Sets the localized default value of this product specification mapping in the language, and sets the default locale.
+	 *
+	 * @param defaultValue the localized default value of this product specification mapping
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	public void setDefaultValue(
+		String defaultValue, Locale locale, Locale defaultLocale);
+
+	public void setDefaultValueCurrentLanguageId(String languageId);
+
+	/**
+	 * Sets the localized default values of this product specification mapping from the map of locales and localized default values.
+	 *
+	 * @param defaultValueMap the locales and localized default values of this product specification mapping
+	 */
+	public void setDefaultValueMap(Map<Locale, String> defaultValueMap);
+
+	/**
+	 * Sets the localized default values of this product specification mapping from the map of locales and localized default values, and sets the default locale.
+	 *
+	 * @param defaultValueMap the locales and localized default values of this product specification mapping
+	 * @param defaultLocale the default locale
+	 */
+	public void setDefaultValueMap(
+		Map<Locale, String> defaultValueMap, Locale defaultLocale);
+
+	@Override
+	public String[] getAvailableLanguageIds();
+
+	@Override
+	public String getDefaultLanguageId();
+
+	@Override
+	public void prepareLocalizedFieldsForImport() throws LocaleException;
+
+	@Override
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException;
 
 }

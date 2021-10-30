@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -66,7 +68,8 @@ public interface ProductSpecificationMappingLocalService
 	public ProductSpecificationMapping addProductSpecificationMapping(
 			long userId, long companyId, String productType,
 			long cpSpecificationOptionId, long cpOptionCategoryId,
-			double priority, String defaultValue, ServiceContext serviceContext)
+			double priority, Map<Locale, String> defaultValueMap,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

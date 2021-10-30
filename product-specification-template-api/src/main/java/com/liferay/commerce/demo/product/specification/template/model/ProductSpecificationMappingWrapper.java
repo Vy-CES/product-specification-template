@@ -141,6 +141,11 @@ public class ProductSpecificationMappingWrapper
 		}
 	}
 
+	@Override
+	public String[] getAvailableLanguageIds() {
+		return model.getAvailableLanguageIds();
+	}
+
 	/**
 	 * Returns the company ID of this product specification mapping.
 	 *
@@ -181,6 +186,11 @@ public class ProductSpecificationMappingWrapper
 		return model.getCreateDate();
 	}
 
+	@Override
+	public String getDefaultLanguageId() {
+		return model.getDefaultLanguageId();
+	}
+
 	/**
 	 * Returns the default value of this product specification mapping.
 	 *
@@ -189,6 +199,72 @@ public class ProductSpecificationMappingWrapper
 	@Override
 	public String getDefaultValue() {
 		return model.getDefaultValue();
+	}
+
+	/**
+	 * Returns the localized default value of this product specification mapping in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized default value of this product specification mapping
+	 */
+	@Override
+	public String getDefaultValue(java.util.Locale locale) {
+		return model.getDefaultValue(locale);
+	}
+
+	/**
+	 * Returns the localized default value of this product specification mapping in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized default value of this product specification mapping. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@Override
+	public String getDefaultValue(java.util.Locale locale, boolean useDefault) {
+		return model.getDefaultValue(locale, useDefault);
+	}
+
+	/**
+	 * Returns the localized default value of this product specification mapping in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized default value of this product specification mapping
+	 */
+	@Override
+	public String getDefaultValue(String languageId) {
+		return model.getDefaultValue(languageId);
+	}
+
+	/**
+	 * Returns the localized default value of this product specification mapping in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized default value of this product specification mapping
+	 */
+	@Override
+	public String getDefaultValue(String languageId, boolean useDefault) {
+		return model.getDefaultValue(languageId, useDefault);
+	}
+
+	@Override
+	public String getDefaultValueCurrentLanguageId() {
+		return model.getDefaultValueCurrentLanguageId();
+	}
+
+	@Override
+	public String getDefaultValueCurrentValue() {
+		return model.getDefaultValueCurrentValue();
+	}
+
+	/**
+	 * Returns a map of the locales and localized default values of this product specification mapping.
+	 *
+	 * @return the locales and localized default values of this product specification mapping
+	 */
+	@Override
+	public Map<java.util.Locale, String> getDefaultValueMap() {
+		return model.getDefaultValueMap();
 	}
 
 	/**
@@ -286,6 +362,21 @@ public class ProductSpecificationMappingWrapper
 		model.persist();
 	}
 
+	@Override
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.kernel.exception.LocaleException {
+
+		model.prepareLocalizedFieldsForImport();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport(
+			java.util.Locale defaultImportLocale)
+		throws com.liferay.portal.kernel.exception.LocaleException {
+
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
 	/**
 	 * Sets the company ID of this product specification mapping.
 	 *
@@ -334,6 +425,63 @@ public class ProductSpecificationMappingWrapper
 	@Override
 	public void setDefaultValue(String defaultValue) {
 		model.setDefaultValue(defaultValue);
+	}
+
+	/**
+	 * Sets the localized default value of this product specification mapping in the language.
+	 *
+	 * @param defaultValue the localized default value of this product specification mapping
+	 * @param locale the locale of the language
+	 */
+	@Override
+	public void setDefaultValue(String defaultValue, java.util.Locale locale) {
+		model.setDefaultValue(defaultValue, locale);
+	}
+
+	/**
+	 * Sets the localized default value of this product specification mapping in the language, and sets the default locale.
+	 *
+	 * @param defaultValue the localized default value of this product specification mapping
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setDefaultValue(
+		String defaultValue, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
+
+		model.setDefaultValue(defaultValue, locale, defaultLocale);
+	}
+
+	@Override
+	public void setDefaultValueCurrentLanguageId(String languageId) {
+		model.setDefaultValueCurrentLanguageId(languageId);
+	}
+
+	/**
+	 * Sets the localized default values of this product specification mapping from the map of locales and localized default values.
+	 *
+	 * @param defaultValueMap the locales and localized default values of this product specification mapping
+	 */
+	@Override
+	public void setDefaultValueMap(
+		Map<java.util.Locale, String> defaultValueMap) {
+
+		model.setDefaultValueMap(defaultValueMap);
+	}
+
+	/**
+	 * Sets the localized default values of this product specification mapping from the map of locales and localized default values, and sets the default locale.
+	 *
+	 * @param defaultValueMap the locales and localized default values of this product specification mapping
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setDefaultValueMap(
+		Map<java.util.Locale, String> defaultValueMap,
+		java.util.Locale defaultLocale) {
+
+		model.setDefaultValueMap(defaultValueMap, defaultLocale);
 	}
 
 	/**

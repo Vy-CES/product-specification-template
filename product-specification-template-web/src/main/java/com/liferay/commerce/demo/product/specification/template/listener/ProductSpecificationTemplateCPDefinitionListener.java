@@ -18,6 +18,7 @@ import org.osgi.service.component.annotations.Reference;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Jeff Handa
@@ -66,9 +67,7 @@ public class ProductSpecificationTemplateCPDefinitionListener extends BaseModelL
         long cpSpecificationOptionId = productSpecificationMapping.getCpSpecificationOptionId();
         double priority = productSpecificationMapping.getPriority();
         long cpOptionCategoryId = productSpecificationMapping.getCpOptionCategoryId();
-        HashMap<Locale, String> valueMap = new HashMap<>();
-        Locale locale = LocaleUtil.fromLanguageId("en_US", false);
-        valueMap.put(locale,productSpecificationMapping.getDefaultValue());
+        Map<Locale, String> valueMap = productSpecificationMapping.getDefaultValueMap();
         ServiceContext serviceContext = new ServiceContext();
         serviceContext.setCompanyId(_companyId);
         serviceContext.setScopeGroupId(_groupId);

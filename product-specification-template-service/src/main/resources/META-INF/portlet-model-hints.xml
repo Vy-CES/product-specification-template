@@ -13,6 +13,6 @@
 		<field name="cpSpecificationOptionId" type="long" />
 		<field name="cpOptionCategoryId" type="long" />
 		<field name="priority" type="double" />
-		<field name="defaultValue" type="String" />
+		<field localized="true" name="defaultValue" type="String" />
 	</model>
 </model-hints>

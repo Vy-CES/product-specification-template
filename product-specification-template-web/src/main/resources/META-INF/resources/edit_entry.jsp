@@ -73,6 +73,7 @@
                                         <div class="col-md-4 mb-3">
                                             <aui:input label="" name="defaultValue_${mapStatus.index}"
                                                        placeholder="default-value" type="text"
+                                                       localized="true"
                                                        value="${productSpecificationMapping.defaultValue}" />
                                         </div>
                                         <div class="col-md-1 mb-3">
@@ -96,7 +97,8 @@
                                         <aui:input label="" name="<%="priority_" + currentNumOfMappings%>" placeholder="priority" type="text" />
                                     </div>
                                     <div class="col-md-4 mb-3">
-                                        <aui:input label="" name="<%="defaultValue_" + currentNumOfMappings%>" placeholder="default-value" type="text" />
+                                        <aui:input label="" name="<%="defaultValue_" + currentNumOfMappings%>"
+                                                   placeholder="default-value" localized="true" type="text" />
                                     </div>
                                     <div class="col-md-1 mb-3">
                                         <button class="btn btn-monospaced btn-secondary" onclick="delIt(<%=currentNumOfMappings%>)">-</button>
@@ -153,7 +155,7 @@
         rowContents += `<aui:input label="" name="<%="priority_" + currentNumOfMappings%>" placeholder="priority" type="text" />`;
         rowContents += '</div>';
         rowContents += '<div class="col-md-4 mb-3">';
-        rowContents += `<aui:input label="" name="<%="defaultValue_" + currentNumOfMappings%>" placeholder="default-value" type="text" />`;
+        rowContents += `<aui:input label="" name="<%="defaultValue_" + currentNumOfMappings%>" placeholder="default-value" localized="true " type="text" />`;
         rowContents += '</div>';
         rowContents += '<div class="col-md-1 mb-3">';
         rowContents += '<button class="btn btn-monospaced btn-secondary h-100" onclick="delIt('+ counter +')">-</button>';
