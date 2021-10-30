@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -66,6 +67,8 @@ public class ProductSpecificationTemplateCPDefinitionListener extends BaseModelL
         double priority = productSpecificationMapping.getPriority();
         long cpOptionCategoryId = productSpecificationMapping.getCpOptionCategoryId();
         HashMap<Locale, String> valueMap = new HashMap<>();
+        Locale locale = LocaleUtil.fromLanguageId("en_US", false);
+        valueMap.put(locale,productSpecificationMapping.getDefaultValue());
         ServiceContext serviceContext = new ServiceContext();
         serviceContext.setCompanyId(_companyId);
         serviceContext.setScopeGroupId(_groupId);
