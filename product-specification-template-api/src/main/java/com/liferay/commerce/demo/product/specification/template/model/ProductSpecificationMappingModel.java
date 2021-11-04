@@ -363,4 +363,7 @@ public interface ProductSpecificationMappingModel
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
 
+	@Override
+	public ProductSpecificationMapping cloneWithOriginalValues();
+
 }

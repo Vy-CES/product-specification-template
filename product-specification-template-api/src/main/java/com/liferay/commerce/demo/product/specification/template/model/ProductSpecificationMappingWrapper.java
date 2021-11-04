@@ -142,6 +142,11 @@ public class ProductSpecificationMappingWrapper
 	}
 
 	@Override
+	public ProductSpecificationMapping cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
+	}
+
+	@Override
 	public String[] getAvailableLanguageIds() {
 		return model.getAvailableLanguageIds();
 	}
