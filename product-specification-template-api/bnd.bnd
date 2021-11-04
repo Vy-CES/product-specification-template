@@ -1,6 +1,6 @@
 Bundle-Name: product-specification-template-api
 Bundle-SymbolicName: com.liferay.commerce.demo.product.specification.template.api
-Bundle-Version: 1.0.0
+Bundle-Version: 4.0.0
 Export-Package:\
 	com.liferay.commerce.demo.product.specification.template.exception,\
 	com.liferay.commerce.demo.product.specification.template.model,\

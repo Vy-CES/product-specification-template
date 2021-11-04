@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -43,6 +44,7 @@ import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
+import java.sql.Blob;
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -53,6 +55,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.BiConsumer;
@@ -807,7 +810,9 @@ public class ProductSpecificationMappingModelImpl
 		for (Map.Entry<String, Object> entry :
 				_columnOriginalValues.entrySet()) {
 
-			if (entry.getValue() != getColumnValue(entry.getKey())) {
+			if (!Objects.equals(
+					entry.getValue(), getColumnValue(entry.getKey()))) {
+
 				_columnBitmask |= _columnBitmasks.get(entry.getKey());
 			}
 		}
@@ -934,6 +939,39 @@ public class ProductSpecificationMappingModelImpl
 		productSpecificationMappingImpl.setDefaultValue(getDefaultValue());
 
 		productSpecificationMappingImpl.resetOriginalValues();
+
+		return productSpecificationMappingImpl;
+	}
+
+	@Override
+	public ProductSpecificationMapping cloneWithOriginalValues() {
+		ProductSpecificationMappingImpl productSpecificationMappingImpl =
+			new ProductSpecificationMappingImpl();
+
+		productSpecificationMappingImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		productSpecificationMappingImpl.setProductSpecificationMappingId(
+			this.<Long>getColumnOriginalValue("productSpecificationMappingId"));
+		productSpecificationMappingImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		productSpecificationMappingImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		productSpecificationMappingImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		productSpecificationMappingImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		productSpecificationMappingImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		productSpecificationMappingImpl.setProductType(
+			this.<String>getColumnOriginalValue("productType"));
+		productSpecificationMappingImpl.setCpSpecificationOptionId(
+			this.<Long>getColumnOriginalValue("cpSpecificationOptionId"));
+		productSpecificationMappingImpl.setCpOptionCategoryId(
+			this.<Long>getColumnOriginalValue("cpOptionCategoryId"));
+		productSpecificationMappingImpl.setPriority(
+			this.<Double>getColumnOriginalValue("priority"));
+		productSpecificationMappingImpl.setDefaultValue(
+			this.<String>getColumnOriginalValue("defaultValue"));
 
 		return productSpecificationMappingImpl;
 	}
@@ -1099,7 +1137,7 @@ public class ProductSpecificationMappingModelImpl
 			attributeGetterFunctions = getAttributeGetterFunctions();
 
 		StringBundler sb = new StringBundler(
-			(4 * attributeGetterFunctions.size()) + 2);
+			(5 * attributeGetterFunctions.size()) + 2);
 
 		sb.append("{");
 
@@ -1110,11 +1148,27 @@ public class ProductSpecificationMappingModelImpl
 			Function<ProductSpecificationMapping, Object>
 				attributeGetterFunction = entry.getValue();
 
+			sb.append("\"");
 			sb.append(attributeName);
-			sb.append("=");
-			sb.append(
-				attributeGetterFunction.apply(
-					(ProductSpecificationMapping)this));
+			sb.append("\": ");
+
+			Object value = attributeGetterFunction.apply(
+				(ProductSpecificationMapping)this);
+
+			if (value == null) {
+				sb.append("null");
+			}
+			else if (value instanceof Blob || value instanceof Date ||
+					 value instanceof Map || value instanceof String) {
+
+				sb.append(
+					"\"" + StringUtil.replace(value.toString(), "\"", "'") +
+						"\"");
+			}
+			else {
+				sb.append(value);
+			}
+
 			sb.append(", ");
 		}
 

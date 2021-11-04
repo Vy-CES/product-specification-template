@@ -16,6 +16,7 @@ package com.liferay.commerce.demo.product.specification.template.service;
 
 import com.liferay.commerce.demo.product.specification.template.model.ProductSpecificationMapping;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -138,6 +139,12 @@ public interface ProductSpecificationMappingLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public ProductSpecificationMapping deleteProductSpecificationMapping(
 		ProductSpecificationMapping productSpecificationMapping);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public <T> T dslQuery(DSLQuery dslQuery);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int dslQueryCount(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

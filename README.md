@@ -11,11 +11,11 @@ Specifications that will be necessary for a given Product Type.
 
 ## Requirements
 
-- Liferay Commerce 3.0.0
+- Liferay Commerce 4.0.0
 
 ## Installation
 
-- Download the `.jar` file in [releases](https://github.com/jhanda/product-specification-template/releases/tag/1.0.0) and 
+- Download the `.jar` file in [releases](https://github.com/jhanda/product-specification-template/releases/tag/4.0.0) and 
 deploy it into Liferay.
 
 or
