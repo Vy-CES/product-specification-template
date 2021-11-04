@@ -22,7 +22,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -32,12 +31,9 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -53,11 +49,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -114,7 +107,7 @@ public class ProductSpecificationMappingModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table PT_ProductSpecificationMapping (uuid_ VARCHAR(75) null,productSpecificationMappingId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,productType VARCHAR(75) null,cpSpecificationOptionId LONG,cpOptionCategoryId LONG,priority DOUBLE,defaultValue STRING null)";
+		"create table PT_ProductSpecificationMapping (uuid_ VARCHAR(75) null,productSpecificationMappingId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,productType VARCHAR(75) null,cpSpecificationOptionId LONG,cpOptionCategoryId LONG,priority DOUBLE,defaultValue VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table PT_ProductSpecificationMapping";
@@ -689,104 +682,12 @@ public class ProductSpecificationMappingModelImpl
 	}
 
 	@Override
-	public String getDefaultValue(Locale locale) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-
-		return getDefaultValue(languageId);
-	}
-
-	@Override
-	public String getDefaultValue(Locale locale, boolean useDefault) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-
-		return getDefaultValue(languageId, useDefault);
-	}
-
-	@Override
-	public String getDefaultValue(String languageId) {
-		return LocalizationUtil.getLocalization(getDefaultValue(), languageId);
-	}
-
-	@Override
-	public String getDefaultValue(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(
-			getDefaultValue(), languageId, useDefault);
-	}
-
-	@Override
-	public String getDefaultValueCurrentLanguageId() {
-		return _defaultValueCurrentLanguageId;
-	}
-
-	@JSON
-	@Override
-	public String getDefaultValueCurrentValue() {
-		Locale locale = getLocale(_defaultValueCurrentLanguageId);
-
-		return getDefaultValue(locale);
-	}
-
-	@Override
-	public Map<Locale, String> getDefaultValueMap() {
-		return LocalizationUtil.getLocalizationMap(getDefaultValue());
-	}
-
-	@Override
 	public void setDefaultValue(String defaultValue) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
 		_defaultValue = defaultValue;
-	}
-
-	@Override
-	public void setDefaultValue(String defaultValue, Locale locale) {
-		setDefaultValue(defaultValue, locale, LocaleUtil.getDefault());
-	}
-
-	@Override
-	public void setDefaultValue(
-		String defaultValue, Locale locale, Locale defaultLocale) {
-
-		String languageId = LocaleUtil.toLanguageId(locale);
-		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
-
-		if (Validator.isNotNull(defaultValue)) {
-			setDefaultValue(
-				LocalizationUtil.updateLocalization(
-					getDefaultValue(), "DefaultValue", defaultValue, languageId,
-					defaultLanguageId));
-		}
-		else {
-			setDefaultValue(
-				LocalizationUtil.removeLocalization(
-					getDefaultValue(), "DefaultValue", languageId));
-		}
-	}
-
-	@Override
-	public void setDefaultValueCurrentLanguageId(String languageId) {
-		_defaultValueCurrentLanguageId = languageId;
-	}
-
-	@Override
-	public void setDefaultValueMap(Map<Locale, String> defaultValueMap) {
-		setDefaultValueMap(defaultValueMap, LocaleUtil.getDefault());
-	}
-
-	@Override
-	public void setDefaultValueMap(
-		Map<Locale, String> defaultValueMap, Locale defaultLocale) {
-
-		if (defaultValueMap == null) {
-			return;
-		}
-
-		setDefaultValue(
-			LocalizationUtil.updateLocalization(
-				defaultValueMap, getDefaultValue(), "DefaultValue",
-				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	@Override
@@ -832,74 +733,6 @@ public class ProductSpecificationMappingModelImpl
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
-	}
-
-	@Override
-	public String[] getAvailableLanguageIds() {
-		Set<String> availableLanguageIds = new TreeSet<String>();
-
-		Map<Locale, String> defaultValueMap = getDefaultValueMap();
-
-		for (Map.Entry<Locale, String> entry : defaultValueMap.entrySet()) {
-			Locale locale = entry.getKey();
-			String value = entry.getValue();
-
-			if (Validator.isNotNull(value)) {
-				availableLanguageIds.add(LocaleUtil.toLanguageId(locale));
-			}
-		}
-
-		return availableLanguageIds.toArray(
-			new String[availableLanguageIds.size()]);
-	}
-
-	@Override
-	public String getDefaultLanguageId() {
-		String xml = getDefaultValue();
-
-		if (xml == null) {
-			return "";
-		}
-
-		Locale defaultLocale = LocaleUtil.getDefault();
-
-		return LocalizationUtil.getDefaultLanguageId(xml, defaultLocale);
-	}
-
-	@Override
-	public void prepareLocalizedFieldsForImport() throws LocaleException {
-		Locale defaultLocale = LocaleUtil.fromLanguageId(
-			getDefaultLanguageId());
-
-		Locale[] availableLocales = LocaleUtil.fromLanguageIds(
-			getAvailableLanguageIds());
-
-		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
-			ProductSpecificationMapping.class.getName(), getPrimaryKey(),
-			defaultLocale, availableLocales);
-
-		prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
-	@Override
-	@SuppressWarnings("unused")
-	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
-		throws LocaleException {
-
-		Locale defaultLocale = LocaleUtil.getDefault();
-
-		String modelDefaultLanguageId = getDefaultLanguageId();
-
-		String defaultValue = getDefaultValue(defaultLocale);
-
-		if (Validator.isNull(defaultValue)) {
-			setDefaultValue(
-				getDefaultValue(modelDefaultLanguageId), defaultLocale);
-		}
-		else {
-			setDefaultValue(
-				getDefaultValue(defaultLocale), defaultLocale, defaultLocale);
-		}
 	}
 
 	@Override
@@ -1236,7 +1069,6 @@ public class ProductSpecificationMappingModelImpl
 	private long _cpOptionCategoryId;
 	private double _priority;
 	private String _defaultValue;
-	private String _defaultValueCurrentLanguageId;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);

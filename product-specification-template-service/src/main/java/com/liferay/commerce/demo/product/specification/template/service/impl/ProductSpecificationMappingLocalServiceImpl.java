@@ -54,7 +54,7 @@ public class ProductSpecificationMappingLocalServiceImpl
 	public ProductSpecificationMapping addProductSpecificationMapping(long userId, long companyId,
 																	  String productType, long cpSpecificationOptionId,
 																	  long cpOptionCategoryId, double priority,
-																	  Map<Locale, String> defaultValueMap,
+																	  String defaultValue,
 																	  ServiceContext serviceContext) throws PortalException {
 
 		User user = userLocalService.getUserById(userId);
@@ -73,7 +73,8 @@ public class ProductSpecificationMappingLocalServiceImpl
 		productSpecificationMapping.setCpSpecificationOptionId(cpSpecificationOptionId);
 		productSpecificationMapping.setCpOptionCategoryId(cpOptionCategoryId);
 		productSpecificationMapping.setPriority(priority);
-		productSpecificationMapping.setDefaultValueMap(defaultValueMap);
+		productSpecificationMapping.setDefaultValue(defaultValue);
+		//productSpecificationMapping.setDefaultValueMap(defaultValueMap);
 		productSpecificationMappingPersistence.updateImpl(productSpecificationMapping);
 
 		return productSpecificationMapping;

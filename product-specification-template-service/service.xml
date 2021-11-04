@@ -23,7 +23,7 @@
 		<column name="cpSpecificationOptionId" type="long" />
 		<column name="cpOptionCategoryId" type="long" />
 		<column name="priority" type="double" />
-		<column name="defaultValue" type="String" localized="true" />
+		<column name="defaultValue" type="String" />
 
 		<!-- Order -->
 

@@ -33,7 +33,7 @@
                             <portlet:param name="mvcPath" value="/edit_entry.jsp" />
                         </portlet:renderURL>
                         <tr>
-                            <td>${cpType.getLabel(locale)}</td>
+                            <td><a href="<%= editMappingURL.toString()%>">${cpType.getLabel(locale)}</a></td>
                             <td>${Integer.toString(productSpecificationMappingLocalService.getProductSpecificationMappingsCount(cpType.getName()))}</td>
                             <td><a class="btn btn-secondary btn-sm float-right" href="<%= editMappingURL.toString()%>">View</a></td>
                         </tr>

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Provides the local service utility for ProductSpecificationMapping. This utility wraps
@@ -48,13 +47,13 @@ public class ProductSpecificationMappingLocalServiceUtil {
 	public static ProductSpecificationMapping addProductSpecificationMapping(
 			long userId, long companyId, String productType,
 			long cpSpecificationOptionId, long cpOptionCategoryId,
-			double priority, Map<java.util.Locale, String> defaultValueMap,
+			double priority, String defaultValue,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addProductSpecificationMapping(
 			userId, companyId, productType, cpSpecificationOptionId,
-			cpOptionCategoryId, priority, defaultValueMap, serviceContext);
+			cpOptionCategoryId, priority, defaultValue, serviceContext);
 	}
 
 	/**

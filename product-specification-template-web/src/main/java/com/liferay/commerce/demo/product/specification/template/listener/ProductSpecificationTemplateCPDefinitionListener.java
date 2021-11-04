@@ -67,7 +67,10 @@ public class ProductSpecificationTemplateCPDefinitionListener extends BaseModelL
         long cpSpecificationOptionId = productSpecificationMapping.getCpSpecificationOptionId();
         double priority = productSpecificationMapping.getPriority();
         long cpOptionCategoryId = productSpecificationMapping.getCpOptionCategoryId();
-        Map<Locale, String> valueMap = productSpecificationMapping.getDefaultValueMap();
+        // Map<Locale, String> valueMap = productSpecificationMapping.getDefaultValueMap();
+        HashMap<Locale, String> valueMap = new HashMap<>();
+        Locale locale = LocaleUtil.fromLanguageId("en_US", false);
+        valueMap.put(locale,productSpecificationMapping.getDefaultValue());
         ServiceContext serviceContext = new ServiceContext();
         serviceContext.setCompanyId(_companyId);
         serviceContext.setScopeGroupId(_groupId);
